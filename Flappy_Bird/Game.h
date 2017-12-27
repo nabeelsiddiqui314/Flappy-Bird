@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "ScrollGround.h"
+#include <memory>
 
 class Game : public State
 {
@@ -15,7 +16,6 @@ private:
 	inline void init_backrounds();
 private:
 	Rect m_sky;
-	Rect m_ground;
-	ScrollGround m_scrollGround;
+	ScrollGround m_ground;
 };
 

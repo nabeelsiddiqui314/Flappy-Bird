@@ -7,11 +7,18 @@
 class ScrollGround
 {
 public:
-	ScrollGround(Rect& ground);
+	 ScrollGround();
 	~ScrollGround();
-private:
-	
 public:
-	Rect& m_ground;
+	void Scroll();
+	void Render(sf::RenderWindow& window);
+private:
+	void Move(float speed);
+	void Repeat();
+	int swap(int num);
+public:
+	Rect temp1;
+	Rect temp2;
+	std::vector<Rect> m_ground;
 };
 

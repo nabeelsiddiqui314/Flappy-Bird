@@ -19,7 +19,12 @@ void Application::Run() {
 			}
 		}
 		m_mainWindow.clear();
-		stateManager.Run();
+		while (m_accumulator > m_ups) {
+			m_accumulator -= m_ups;
+			stateManager.Update();
+		}
+		m_accumulator += m_clock.restart();
+		stateManager.Render();
 		m_mainWindow.display();
 	}
 }

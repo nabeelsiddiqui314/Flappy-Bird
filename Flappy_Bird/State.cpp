@@ -15,9 +15,12 @@ void StateManager::SetState(State* state) {
 	m_state = state;
 }
 
-void StateManager::Run() {
+void StateManager::Update() {
 	m_state->HandleInput(*m_window);
 	m_state->Update(*m_window);
+}
+
+void StateManager::Render() {
 	m_state->Render(*m_window);
 }
 

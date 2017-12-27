@@ -22,7 +22,8 @@ public:
 public:
 	void SetWindow(sf::RenderWindow& window);
 	void SetState(State* state);
-	void Run();
+	void Update();
+	void Render();
 private:
 	sf::RenderWindow* m_window;
 	State* m_state;
