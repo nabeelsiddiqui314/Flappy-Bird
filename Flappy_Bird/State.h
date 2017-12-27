@@ -1,5 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "templates.h"
+#include "Interface.h"
+#include <iostream>
 
 class State
 {

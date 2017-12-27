@@ -1,22 +1,21 @@
 #pragma once
 #include "State.h"
-#include "Game.h"
+#include "ScrollGround.h"
 
-class Menu : public State
+class Game : public State
 {
 public:
-	 Menu();
-	~Menu();
+	Game();
+	~Game();
 public:
 	void HandleInput(sf::RenderWindow& window);
 	void Update(sf::RenderWindow& window);
 	void Render(sf::RenderWindow& window);
 private:
-	inline void init_backround();
-	inline void init_buttons();
+	inline void init_backrounds();
 private:
-	Rect m_backroundImg;
-	Rect m_title;
-	Rect m_play_button;
+	Rect m_sky;
+	Rect m_ground;
+	ScrollGround m_scrollGround;
 };
 
