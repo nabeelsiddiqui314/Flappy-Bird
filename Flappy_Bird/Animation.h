@@ -6,11 +6,12 @@
 class Animation
 {
 public:
-	Animation(std::vector<std::string> filepaths);
+	Animation(sf::RectangleShape& rect, std::vector<std::string> filepaths);
 	~Animation();
 public:
-	void Animate(sf::RectangleShape& sprite, float dt);
+	void Animate(float dt);
 private:
+	sf::RectangleShape& m_rect;
 	std::vector<const sf::Texture*> m_textures;
 	Time m_DT;
 	int m_index = 0;

@@ -2,18 +2,19 @@
 #include "Animation.h"
 
 
-Animation::Animation(std::vector<std::string> filepaths) {
+Animation::Animation(sf::RectangleShape& rect, std::vector<std::string> filepaths) : m_rect(rect) {
 	for (unsigned short int i = 0; i < filepaths.size(); i++) {
 		sf::Texture* texture = new sf::Texture();
 		texture->loadFromFile(filepaths[i]);
 		m_textures.push_back(texture);
 	}
+	m_rect.setTexture(m_textures[0]);
 }
 
-void Animation::Animate(sf::RectangleShape& sprite, float dt) {
+void Animation::Animate(float dt) {
 	m_DT.time = m_DT.clock.getElapsedTime();
 	if (m_DT.time.asSeconds() >  dt) {
-		sprite.setTexture(m_textures[m_index]);
+		m_rect.setTexture(m_textures[m_index]);
 		if (m_index < m_textures.size() - 1) {
 			m_index++;
 		}

@@ -18,13 +18,16 @@ Game::Game() {
 
 void Game::HandleInput(sf::RenderWindow& window) {
 	m_start.time = m_start.clock.getElapsedTime();
-	if (m_start.time.asSeconds() > 3) {
+	if (m_start.time.asSeconds() > 1) {
 		if (!m_isPlaying) {
 			if (Interface::isMouseInWindow(window) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 				m_state = PLAYING;
 				m_isPlaying = true;
 			}
 		}
+	}
+	if (m_state == PLAYING && Interface::isClicked(window, m_sky)) {
+		m_bird->Tap();
 	}
 }
 
@@ -34,16 +37,17 @@ void Game::Update(sf::RenderWindow& window) {
 		m_ground->Scroll();
 		break;
 	case PLAYING:
-		m_bird->Update();
 		m_ground->Scroll();
 		m_pipes->Update();
+		m_bird->Update();
 		for (unsigned short int i = 0; i < m_pipes->GetPipes().size(); i++) {
-			if (Collision::CheckCollision(m_bird->GetBird(), 0.8, m_pipes->GetPipes()[i], 0.8)) {
-				std::cout << "collision";
+			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_pipes->GetPipes()[i], 0.6)) {
+				m_state = GAME_OVER;
 			}
 		}
 		break;
 	case GAME_OVER:
+		stateManager.SetState(new Game());
 		break;
 	}
 }
