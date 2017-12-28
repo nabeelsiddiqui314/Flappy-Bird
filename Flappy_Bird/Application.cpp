@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Application.h"
+#include "Variables.h"
 
 
 Application::Application() {
-	m_mainWindow.create(sf::VideoMode(550, 700), "FlappyBird");
+	m_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "FlappyBird");
 	stateManager.SetWindow(m_mainWindow);
 	stateManager.SetState(new Menu());
 	this->Run();

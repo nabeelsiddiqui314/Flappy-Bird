@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "templates.h"
+#include "Variables.h"
 #include "Interface.h"
 #include <iostream>
 
@@ -12,8 +13,9 @@ public:
 public:
 	void Scroll();
 	void Render(sf::RenderWindow& window);
+	int GroundHeight() const { return m_ground[0].getPosition().y; }
 private:
-	void Move(float speed);
+	void Move();
 	void Repeat();
 	int swap(int num);
 public:

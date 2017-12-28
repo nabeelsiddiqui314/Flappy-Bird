@@ -7,7 +7,7 @@ ScrollGround::ScrollGround() {
 	m_ground.push_back(temp2);
 	for (unsigned int i = 0; i < 2; i++) {
 		m_ground[i].setSize(sf::Vector2f(760, 121));
-		m_ground[i].tex.loadFromFile("./assets/backrounds/land.png");
+		m_ground[i].tex.loadFromFile("./assets/objects/land.png");
 		m_ground[i].setTexture(&m_ground[i].tex);
 	}
 	m_ground[0].setPosition(0, 620);
@@ -15,7 +15,7 @@ ScrollGround::ScrollGround() {
 }
 
 void ScrollGround::Scroll() {
-	this->Move(1);
+	this->Move();
 	this->Repeat();
 }
 
@@ -24,9 +24,9 @@ void ScrollGround::Render(sf::RenderWindow& window) {
 	window.draw(m_ground[1]);
 }
 
-void ScrollGround::Move(float speed) {
-	m_ground[0].move(-speed, 0);
-	m_ground[1].move(-speed, 0);
+void ScrollGround::Move() {
+	m_ground[0].move(-MOVE_SPEED, 0);
+	m_ground[1].move(-MOVE_SPEED, 0);
 }
 
 void ScrollGround::Repeat() {
@@ -48,6 +48,6 @@ int ScrollGround::swap(int num) {
 	return num;
 }
 
-ScrollGround::~ScrollGround()
-{
+ScrollGround::~ScrollGround() {
+	m_ground.clear();
 }
