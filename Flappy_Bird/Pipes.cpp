@@ -6,16 +6,16 @@ Pipes::Pipes(int groundHeight) : m_groundHeight(groundHeight) {
 	m_pipeTopTex.loadFromFile("./assets/objects/top_pipe.png");
 	m_pipeBottomTex.loadFromFile("./assets/objects/bottom_pipe.png");
 	srand(time(NULL));
+	m_yOffset = random(PIPE_DISTANCE + 50, m_groundHeight - 50);
 }
 
 void Pipes::Update() {
 	m_frequency.time = m_frequency.clock.getElapsedTime();
 	if (m_frequency.time.asSeconds() > PIPES_FREQUENCY) {
-		this->RandomizeOffset();
 		this->SpawnTop();
 		this->SpawnBottom();
+		this->RandomizeOffset();
 		m_frequency.clock.restart();
-		std::cout << rand() % 10;
 	}
 	this->Move();
 	this->Delete();
@@ -34,7 +34,17 @@ void Pipes::Move() {
 }
 
 void Pipes::RandomizeOffset() {
-	m_yOffset = (rand() % (m_groundHeight - 150)) + 150;
+	int difference = random(50, 200);
+	std::cout << difference << std::endl;
+	if (m_yOffset + difference > m_groundHeight - 50) {
+		m_yOffset -= difference;
+	}
+	else if (m_yOffset - difference < PIPE_DISTANCE + 50) {
+		m_yOffset += difference;
+	}
+	else {
+		m_yOffset = m_yOffset + random(-difference, difference);
+	}
 }
 
 void Pipes::SpawnTop() {
@@ -58,6 +68,11 @@ void Pipes::Delete() {
 		}
 	}
 }
+
+const std::vector<sf::Sprite> &Pipes::GetPipes() const {
+	return m_pipes;
+}
+
 
 Pipes::~Pipes() {
 

@@ -15,12 +15,14 @@ public:
 public:
 	void Update();
 	void Render(sf::RenderWindow& window);
+	const std::vector<sf::Sprite>& GetPipes() const;
 private:
 	void Move();
 	void RandomizeOffset();
 	void SpawnTop();
 	void SpawnBottom();
 	void Delete();
+	int random(int min, int max) { srand(time(NULL)); return rand() % (max + 1 - min) + min; }
 private:
 	int                     m_groundHeight;
 	int                     m_yOffset;
