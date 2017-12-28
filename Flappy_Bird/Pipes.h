@@ -15,7 +15,7 @@ public:
 public:
 	void Update();
 	void Render(sf::RenderWindow& window);
-	const std::vector<sf::Sprite>& GetPipes() const;
+	const std::vector<sf::RectangleShape> &GetPipes() const;
 private:
 	void Move();
 	void RandomizeOffset();
@@ -27,7 +27,7 @@ private:
 	int                     m_groundHeight;
 	int                     m_yOffset;
 	Time                    m_frequency;
-	std::vector<sf::Sprite> m_pipes;
+	std::vector<sf::RectangleShape> m_pipes;
 	sf::Texture             m_pipeTopTex;
 	sf::Texture             m_pipeBottomTex;
 };

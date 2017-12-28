@@ -48,15 +48,17 @@ void Pipes::RandomizeOffset() {
 }
 
 void Pipes::SpawnTop() {
-	sf::Sprite sprite;
-	sprite.setTexture(m_pipeTopTex);
+	sf::RectangleShape sprite;
+	sprite.setSize(sf::Vector2f(69, 800));
+	sprite.setTexture(&m_pipeTopTex);
 	sprite.setPosition(SCREEN_WIDTH, m_yOffset - sprite.getGlobalBounds().height - PIPE_DISTANCE);
 	m_pipes.push_back(sprite);
 }
 
 void Pipes::SpawnBottom() {
-	sf::Sprite sprite;
-	sprite.setTexture(m_pipeBottomTex);
+	sf::RectangleShape sprite;
+	sprite.setSize(sf::Vector2f(69, 800));
+	sprite.setTexture(&m_pipeBottomTex);
 	sprite.setPosition(SCREEN_WIDTH, m_yOffset);
 	m_pipes.push_back(sprite);
 }
@@ -69,7 +71,7 @@ void Pipes::Delete() {
 	}
 }
 
-const std::vector<sf::Sprite> &Pipes::GetPipes() const {
+const std::vector<sf::RectangleShape> &Pipes::GetPipes() const {
 	return m_pipes;
 }
 

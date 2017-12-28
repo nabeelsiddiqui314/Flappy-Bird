@@ -2,6 +2,14 @@
 #include "State.h"
 #include "ScrollGround.h"
 #include "Pipes.h"
+#include "Bird.h"
+#include "Collision.h"
+
+enum GameState {
+	NOT_READY,
+	PLAYING,
+	GAME_OVER
+};
 
 class Game : public State
 {
@@ -15,8 +23,12 @@ public:
 private:
 	inline void init_backrounds();
 private:
-	Rect m_sky;
+	Rect          m_sky;
 	ScrollGround* m_ground;
-	Pipes* m_pipes;
+	Pipes*        m_pipes;
+	Bird*         m_bird;
+	GameState     m_state = NOT_READY;
+	bool          m_isPlaying = false;
+	Time          m_start;
 };
 

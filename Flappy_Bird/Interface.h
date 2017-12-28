@@ -10,4 +10,5 @@ public:
 	static bool isHovered(sf::RenderWindow& window, sf::RectangleShape& button);
 	static void SetPointer(sf::RenderWindow& window, sf::RectangleShape& pointer, bool hideMouse);
 	static bool isClicked(sf::RenderWindow& window, sf::RectangleShape& button);
+	static bool isMouseInWindow(sf::RenderWindow& window);
 };

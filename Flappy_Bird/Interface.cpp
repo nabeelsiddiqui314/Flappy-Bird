@@ -27,6 +27,11 @@ bool Interface::isClicked(sf::RenderWindow& window, sf::RectangleShape& button) 
 	}
 }
 
+bool Interface::isMouseInWindow(sf::RenderWindow& window) {
+	return (sf::Mouse::getPosition(window).x > 0 && sf::Mouse::getPosition(window).x < window.getSize().x &&
+		    sf::Mouse::getPosition(window).y > 0 && sf::Mouse::getPosition(window).y < window.getSize().y);
+}
+
 
 Interface::~Interface()
 {
