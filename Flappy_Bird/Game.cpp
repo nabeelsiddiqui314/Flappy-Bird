@@ -10,9 +10,14 @@ inline void Game::init_backrounds() {
 
 Game::Game() {
 	init_backrounds();
-	m_ground = new ScrollGround();
-	m_pipes  = new Pipes(m_ground->GroundHeight());
-	m_bird   = new Bird();
+	m_ground    = new ScrollGround();
+	m_pipes     = new Pipes(m_ground->GroundHeight());
+	m_bird      = new Bird();
+	m_scoreText = new Text("./assets/fonts/FlappyFont.ttf");
+	m_scoreText->setCharacterSize(50u);
+	m_scoreText->setOrigin(m_scoreText->getGlobalBounds().width / 2, m_scoreText->getGlobalBounds().height / 2);
+	m_scoreText->setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+	m_scoreText->setString("0");
 }
 
 
@@ -35,14 +40,29 @@ void Game::Update(sf::RenderWindow& window) {
 	switch (m_state) {
 	case NOT_READY:
 		m_ground->Scroll();
+		m_bird->Update(false);
 		break;
 	case PLAYING:
 		m_ground->Scroll();
 		m_pipes->Update();
-		m_bird->Update();
+		m_bird->Update(true);
 		for (unsigned short int i = 0; i < m_pipes->GetPipes().size(); i++) {
 			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_pipes->GetPipes()[i], 0.6)) {
 				m_state = GAME_OVER;
+			}
+		}
+		for (unsigned short int i = 0; i < m_ground->GetGround().size(); i++) {
+			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_ground->GetGround()[i], 0.6)) {
+				m_state = GAME_OVER;
+			}
+		}
+		if (m_state != GAME_OVER) {
+			for (unsigned short int i = 0; i < m_pipes->GetScroringPipes().size(); i++) {
+				if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_pipes->GetScroringPipes()[i], 0.6)) {
+					m_pipes->GetScroringPipes().erase(m_pipes->GetScroringPipes().begin() + i);
+					m_score++;
+					m_scoreText->setString(std::to_string(m_score));
+				}
 			}
 		}
 		break;
@@ -57,10 +77,12 @@ void Game::Render(sf::RenderWindow& window) {
 	m_pipes->Render(window);
 	m_ground->Render(window);
 	m_bird->Render(window);
+	window.draw(*m_scoreText);
 }
 
 
 Game::~Game() {
 	delete m_ground;
 	delete m_pipes;
+	delete m_bird;
 }

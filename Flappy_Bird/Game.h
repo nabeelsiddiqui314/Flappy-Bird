@@ -30,5 +30,7 @@ private:
 	GameState     m_state = NOT_READY;
 	bool          m_isPlaying = false;
 	Time          m_start;
+	Text*         m_scoreText;
+	unsigned int  m_score = 0;
 };
 

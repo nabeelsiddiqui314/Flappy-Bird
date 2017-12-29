@@ -13,7 +13,8 @@ public:
 public:
 	void Scroll();
 	void Render(sf::RenderWindow& window);
-	int GroundHeight() const { return m_ground[0].getPosition().y; }
+	int GroundHeight() const;
+	const std::vector<Rect>& GetGround() const;
 private:
 	void Move();
 	void Repeat();

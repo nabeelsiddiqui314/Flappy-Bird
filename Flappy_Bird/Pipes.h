@@ -16,11 +16,13 @@ public:
 	void Update();
 	void Render(sf::RenderWindow& window);
 	const std::vector<sf::RectangleShape> &GetPipes() const;
+	std::vector<sf::RectangleShape> &GetScroringPipes();
 private:
 	void Move();
 	void RandomizeOffset();
 	void SpawnTop();
 	void SpawnBottom();
+	void SpawnScoring();
 	void Delete();
 	int random(int min, int max) { srand(time(NULL)); return rand() % (max + 1 - min) + min; }
 private:
@@ -28,6 +30,7 @@ private:
 	int                     m_yOffset;
 	Time                    m_frequency;
 	std::vector<sf::RectangleShape> m_pipes;
+	std::vector<sf::RectangleShape> m_scoringPipes;
 	sf::Texture             m_pipeTopTex;
 	sf::Texture             m_pipeBottomTex;
 };

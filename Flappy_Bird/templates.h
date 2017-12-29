@@ -13,3 +13,12 @@ struct Time {
 	sf::Clock clock;
 	sf::Time time;
 };
+
+struct Text : public sf::Text {
+	Text(std::string filepath) {
+		m_font.loadFromFile(filepath);
+		this->setFont(m_font);
+	}
+private:
+	sf::Font m_font;
+};

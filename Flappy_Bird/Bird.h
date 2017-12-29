@@ -14,7 +14,7 @@ public:
 	Bird();
 	~Bird();
 public:
-	void Update();
+	void Update(bool fly);
 	void Render(sf::RenderWindow& window);
 	void Tap();
 	const sf::RectangleShape& GetBird() const { return m_bird; }

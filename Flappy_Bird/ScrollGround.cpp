@@ -24,6 +24,14 @@ void ScrollGround::Render(sf::RenderWindow& window) {
 	window.draw(m_ground[1]);
 }
 
+int ScrollGround::GroundHeight() const { 
+	return m_ground[0].getPosition().y; 
+}
+
+const std::vector<Rect>& ScrollGround::GetGround() const {
+	return m_ground; 
+}
+
 void ScrollGround::Move() {
 	m_ground[0].move(-MOVE_SPEED, 0);
 	m_ground[1].move(-MOVE_SPEED, 0);
