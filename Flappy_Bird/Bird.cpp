@@ -12,8 +12,9 @@ Bird::Bird()
 	m_bird.setPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
 }
 
-void Bird::Update(bool fly) {
-	if (fly) {
+void Bird::Update(bool playing) {
+	m_animation.Animate(0.1);
+	if (playing) {
 		if (m_bird_state == FLYING) {
 			m_bird.move(0, -FLY_SPEED);
 			m_rotation -= ROTATION_SPEED_UP;
@@ -36,7 +37,20 @@ void Bird::Update(bool fly) {
 			m_bird_state = FALLING;
 		}
 	}
-	m_animation.Animate(0.1);
+	else {
+		this->PreReadyAnimate();
+	}
+}
+
+void Bird::PreReadyAnimate() {
+	m_preReadyFlyTime.time = m_preReadyFlyTime.clock.getElapsedTime();
+	if (m_preReadyFlyTime.time.asSeconds() < 0.25) {
+		m_bird.move(0, m_preReadyVelocity);
+	}
+	else {
+		m_preReadyVelocity *= -1;
+		m_preReadyFlyTime.clock.restart();
+	}
 }
 
 void Bird::Render(sf::RenderWindow& window) {

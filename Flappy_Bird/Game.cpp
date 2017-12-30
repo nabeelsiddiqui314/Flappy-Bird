@@ -1,23 +1,29 @@
 #include "stdafx.h"
 #include "Game.h"
 
-inline void Game::init_backrounds() {
+inline void Game::init_rects() {
 	m_sky.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
 	m_sky.setPosition(0, 0);
 	m_sky.tex.loadFromFile("./assets/backrounds/sky.png");
 	m_sky.setTexture(&m_sky.tex);
 }
 
+inline void Game::init_scoreText() {
+	m_scoreText->setCharacterSize(50u);
+	m_scoreText->setOrigin(m_scoreText->getGlobalBounds().width / 2, m_scoreText->getGlobalBounds().height / 2);
+	m_scoreText->setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	m_scoreText->setString("0");
+	m_scoreText->setOutlineColor(sf::Color::Black);
+	m_scoreText->setOutlineThickness(4);
+}
+
 Game::Game() {
-	init_backrounds();
+	init_rects();
 	m_ground    = new ScrollGround();
 	m_pipes     = new Pipes(m_ground->GroundHeight());
 	m_bird      = new Bird();
 	m_scoreText = new Text("./assets/fonts/FlappyFont.ttf");
-	m_scoreText->setCharacterSize(50u);
-	m_scoreText->setOrigin(m_scoreText->getGlobalBounds().width / 2, m_scoreText->getGlobalBounds().height / 2);
-	m_scoreText->setPosition(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-	m_scoreText->setString("0");
+	init_scoreText();
 }
 
 
@@ -48,11 +54,13 @@ void Game::Update(sf::RenderWindow& window) {
 		m_bird->Update(true);
 		for (unsigned short int i = 0; i < m_pipes->GetPipes().size(); i++) {
 			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_pipes->GetPipes()[i], 0.6)) {
+				m_gameOver = new Game_Over(window, m_score);
 				m_state = GAME_OVER;
 			}
 		}
 		for (unsigned short int i = 0; i < m_ground->GetGround().size(); i++) {
 			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_ground->GetGround()[i], 0.6)) {
+				m_gameOver = new Game_Over(window, m_score);
 				m_state = GAME_OVER;
 			}
 		}
@@ -67,7 +75,10 @@ void Game::Update(sf::RenderWindow& window) {
 		}
 		break;
 	case GAME_OVER:
-		stateManager.SetState(new Game());
+		
+		if (m_gameOver->IsRestartClicked()) {
+			stateManager.SetState(new Game());
+		}
 		break;
 	}
 }
@@ -77,7 +88,18 @@ void Game::Render(sf::RenderWindow& window) {
 	m_pipes->Render(window);
 	m_ground->Render(window);
 	m_bird->Render(window);
-	window.draw(*m_scoreText);
+	switch (m_state) {
+	case NOT_READY:
+		break;
+	case PLAYING:
+		window.draw(*m_scoreText);
+		break;
+	case GAME_OVER:
+		m_gameOver->RenderGameOver();
+		m_gameOver->RenderButton();
+		m_gameOver->SplashScreen();
+		break;
+	}
 }
 
 
@@ -85,4 +107,8 @@ Game::~Game() {
 	delete m_ground;
 	delete m_pipes;
 	delete m_bird;
+	delete m_scoreText;
+	if (m_gameOver != nullptr) {
+		delete m_gameOver;
+	}
 }

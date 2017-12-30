@@ -4,6 +4,7 @@
 #include "Pipes.h"
 #include "Bird.h"
 #include "Collision.h"
+#include "Game_Over.h"
 
 enum GameState {
 	NOT_READY,
@@ -21,12 +22,14 @@ public:
 	void Update(sf::RenderWindow& window);
 	void Render(sf::RenderWindow& window);
 private:
-	inline void init_backrounds();
+	inline void init_rects();
+	inline void init_scoreText();
 private:
 	Rect          m_sky;
 	ScrollGround* m_ground;
 	Pipes*        m_pipes;
 	Bird*         m_bird;
+	Game_Over*    m_gameOver;
 	GameState     m_state = NOT_READY;
 	bool          m_isPlaying = false;
 	Time          m_start;

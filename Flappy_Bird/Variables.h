@@ -14,3 +14,7 @@ constexpr float FLY_SPEED = 5;
 
 constexpr float ROTATION_SPEED_UP = 3.5f;
 constexpr float ROTATION_SPEED_DOWN = 1.5F;
+
+constexpr int MINIMUM_BRONZE_SCORE = 0;
+constexpr int MINIMUM_SILVER_SCORE = 10;
+constexpr int MINIMUM_GOLD_SCORE   = 25;
