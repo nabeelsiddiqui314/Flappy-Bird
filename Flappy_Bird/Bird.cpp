@@ -10,6 +10,8 @@ Bird::Bird()
 	m_bird.setSize(sf::Vector2f(50, 35));
 	m_bird.setOrigin(m_bird.getGlobalBounds().width / 2, m_bird.getGlobalBounds().height / 2);
 	m_bird.setPosition(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
+	m_flySound.buffer.loadFromFile("./assets/sounds/wing.wav");
+	m_flySound.setBuffer(m_flySound.buffer);
 }
 
 void Bird::Update(bool playing) {
@@ -58,6 +60,7 @@ void Bird::Render(sf::RenderWindow& window) {
 }
 
 void Bird::Tap() {
+	m_flySound.play();
 	m_bird_state = FLYING;
 	m_flyTime.clock.restart();
 }

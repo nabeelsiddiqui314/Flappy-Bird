@@ -28,5 +28,6 @@ private:
 	Bird_State m_bird_state = FALLING;
 	float m_rotation = 0;
 	float m_preReadyVelocity = -1;
+	Sound m_flySound;
 };
 

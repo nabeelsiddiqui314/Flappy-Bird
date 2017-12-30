@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 struct Rect : public sf::RectangleShape {
 	sf::Texture tex;
@@ -21,4 +22,8 @@ struct Text : public sf::Text {
 	}
 private:
 	sf::Font m_font;
+};
+
+struct Sound : public sf::Sound {
+	sf::SoundBuffer buffer;
 };

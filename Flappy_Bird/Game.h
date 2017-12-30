@@ -24,6 +24,7 @@ public:
 private:
 	inline void init_rects();
 	inline void init_scoreText();
+	inline void init_sounds();
 private:
 	Rect          m_sky;
 	ScrollGround* m_ground;
@@ -35,5 +36,7 @@ private:
 	Time          m_start;
 	Text*         m_scoreText;
 	unsigned int  m_score = 0;
+	Sound         m_hit;
+	Sound         m_point;
 };
 

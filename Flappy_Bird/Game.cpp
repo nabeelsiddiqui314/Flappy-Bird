@@ -17,6 +17,13 @@ inline void Game::init_scoreText() {
 	m_scoreText->setOutlineThickness(4);
 }
 
+inline void Game::init_sounds() {
+	m_hit.buffer.loadFromFile("./assets/sounds/hit.wav");
+	m_point.buffer.loadFromFile("./assets/sounds/point.wav");
+	m_hit.setBuffer(m_hit.buffer);
+	m_point.setBuffer(m_point.buffer);
+}
+
 Game::Game() {
 	init_rects();
 	m_ground    = new ScrollGround();
@@ -24,6 +31,7 @@ Game::Game() {
 	m_bird      = new Bird();
 	m_scoreText = new Text("./assets/fonts/FlappyFont.ttf");
 	init_scoreText();
+	init_sounds();
 }
 
 
@@ -54,12 +62,14 @@ void Game::Update(sf::RenderWindow& window) {
 		m_bird->Update(true);
 		for (unsigned short int i = 0; i < m_pipes->GetPipes().size(); i++) {
 			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_pipes->GetPipes()[i], 0.6)) {
+				m_hit.play();
 				m_gameOver = new Game_Over(window, m_score);
 				m_state = GAME_OVER;
 			}
 		}
 		for (unsigned short int i = 0; i < m_ground->GetGround().size(); i++) {
 			if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_ground->GetGround()[i], 0.6)) {
+				m_hit.play();
 				m_gameOver = new Game_Over(window, m_score);
 				m_state = GAME_OVER;
 			}
@@ -68,14 +78,14 @@ void Game::Update(sf::RenderWindow& window) {
 			for (unsigned short int i = 0; i < m_pipes->GetScroringPipes().size(); i++) {
 				if (Collision::CheckCollision(m_bird->GetBird(), 0.6, m_pipes->GetScroringPipes()[i], 0.6)) {
 					m_pipes->GetScroringPipes().erase(m_pipes->GetScroringPipes().begin() + i);
+					m_point.play();
 					m_score++;
 					m_scoreText->setString(std::to_string(m_score));
 				}
 			}
 		}
 		break;
-	case GAME_OVER:
-		
+	case GAME_OVER:	
 		if (m_gameOver->IsRestartClicked()) {
 			stateManager.SetState(new Game());
 		}
