@@ -29,8 +29,3 @@ void Application::Run() {
 		m_mainWindow.display();
 	}
 }
-
-
-Application::~Application() {
-
-}
